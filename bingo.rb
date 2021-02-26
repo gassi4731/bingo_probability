@@ -6,8 +6,8 @@
 # 環境変数
 @cardNum = 9 # ビンゴの枠の量
 @cardNumOne = 3 # ビンゴの1辺の数
-@drawnNum = 9 # 抽選される数
-@exeNum = 1000 # 実行回数
+@drawnNum = 25 # 抽選される数
+@exeNum = 100000 # 実行回数
 
 # メイン
 def main()
@@ -30,7 +30,7 @@ def cycle()
   # 初期化
   # ビンゴの枠をつくる & カードにランダムに数字を入れていく
   @card = Array.new(@cardNum){ |index| [index+1, 0] }
-  @card.shuffle!
+  # @card.shuffle!
 
   # 抽選順を作成
   @draw = Array.new(@drawnNum){ |index| index+1 }
@@ -39,7 +39,15 @@ def cycle()
   for i in 0...@draw.length do
     for j in 0...@card.length do
       if @draw[i] == @card[j][0]
-        @card[j][1] = 1 # 数字があたったことを記録
+
+        # -----------------------------
+        # 3分の1の確率で穴があくようにする
+        # -----------------------------
+        if rand(1..3) == 1
+          @card[j][1] = 1 # 数字があたったことを記録
+        else
+          @card[j][1] = 2 # 数字が当たらなかった
+        end
         if judge()
           return i+1
         end
