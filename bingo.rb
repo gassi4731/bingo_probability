@@ -36,6 +36,10 @@ def cycle()
   @draw = Array.new(@drawnNum){ |index| index+1 }
   @draw.shuffle!
 
+  # 中央に穴をあける
+  center = @cardNumOne * (@cardNumOne / 2) + @cardNumOne / 2
+  @card[center][1] = 1
+
   for i in 0...@draw.length do
     for j in 0...@card.length do
       if @draw[i] == @card[j][0]
@@ -111,5 +115,3 @@ def judge()
 end
 
 main()
-
-# print @card
